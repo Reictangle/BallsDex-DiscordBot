@@ -55,7 +55,14 @@ class Config(commands.GroupCog):
         channel: discord.TextChannel
             The channel you want to set, current one if not specified.
         """
+        guild = cast(discord.Guild, interaction.guild)
         user = cast(discord.Member, interaction.user)
+
+        if cast(int, guild.member_count) < 15:
+            await interaction.response.send_message(
+                f"You cannot configure the bot into this server because it doesn't have 15 members."
+            )
+            return ## Big thanks to "dot_zz" for making this.
 
         if channel is None:
             if isinstance(interaction.channel, discord.TextChannel):
