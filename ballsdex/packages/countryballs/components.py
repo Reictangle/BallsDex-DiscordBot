@@ -51,7 +51,7 @@ class CountryballNamePrompt(Modal, title=f"Catch this {settings.collectible_name
         # TODO: use lock
         if self.ball.catched:
             await interaction.response.send_message(
-                f"{interaction.user.mention} I was caught already!"
+                f"{interaction.user.mention} I was caught already! And you tried: ``{self.name.value}``"
             )
             return
         if self.ball.model.catch_names:
