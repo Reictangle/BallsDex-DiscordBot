@@ -426,6 +426,22 @@ class Admin(commands.GroupCog):
     ):
         spawned = 0
 
+    @app_commands.command()
+    @app_commands.checks.has_any_role(*settings.root_role_ids)
+    async def echo(
+        self, 
+        interaction: discord.Interaction["BallsDexBot"],
+        message: str,
+        channel: discord.TextChannel | None = None,
+    ):
+        send_channel = channel
+
+        if send_channel is None:
+            send_channel = cast(discord.TextChannel, interaction.channel)
+      
+        await interaction.response.send_message("Sent echo message!", ephemeral = True)
+        await send_channel.send(message)
+        #  Thanks to DotZZ for making this command
         async def update_message_loop():
             nonlocal spawned
             for i in range(5 * 12 * 10):  # timeout progress after 10 minutes
